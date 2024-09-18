@@ -34,8 +34,9 @@ html, body{
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    font-size: 26px;
+    font-size: 36px;
     font-weight: 700;
+    font-style: italic;
 }
 
 .charger{
@@ -65,10 +66,14 @@ html, body{
 
 }
 
+.backspace{
+    display: flex;
+}
+
 .keypad{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
     flex-direction: column;
     gap: 10px;
     height: 440px;

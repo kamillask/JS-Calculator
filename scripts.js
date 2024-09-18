@@ -1,7 +1,11 @@
+//DECIMAL CODED, NEED TO CODE ^ AND %
+
+
 let left = "";
 let right = "";
 let operator = "";
 let operatorSelected = false;
+let decimalSelected = false;
 let result = "";
 
 //DISPLAY
@@ -35,10 +39,17 @@ resetButton.addEventListener("click", () => {
 const numButtons = document.querySelector(".keypad");
 numButtons.addEventListener("click", (event) => {
     let target = event.target;
+
     if(target.className==="number"){
         if(left==="" && right==="" && operator==="" && operatorSelected===false){
             clearDisplay();
             result = "";
+        }
+        //DECIMAL LOGIC
+        if(target.id==="."){
+            if(decimalSelected===true){
+                alert("You can only have one decimal.");
+            }
         }
         display.textContent += target.id;
         if(operatorSelected === false){
@@ -65,6 +76,7 @@ numButtons.addEventListener("click", (event) => {
         operator = target.id;
         operatorSelected = true;
     }
+
     if(target.className==="calculate"){
         calculate();
     }
@@ -98,7 +110,7 @@ function divide(){
 
 //CALCULATION
 function calculate() {
-    if(operator==="/" && right==0){      //== right now, maybe ===?
+    if(operator==="/" && right==0){      
         alert("Can't divide by zero.");
         clear();
     }
