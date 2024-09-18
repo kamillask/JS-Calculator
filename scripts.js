@@ -2,7 +2,7 @@ let left = "";
 let right = "";
 let operator = "";
 let operatorSelected = false;
-
+let result = "";
 
 //DISPLAY
 const display = document.querySelector(".IO");
@@ -12,6 +12,13 @@ display.textContent = "";
 const resetButton = document.querySelector(".clear");
 function clear() {
     display.textContent = "";
+    left = "";
+    right = "";
+    operator = "";
+    operatorSelected = false;
+    result = "";
+}
+function clearData(){
     left = "";
     right = "";
     operator = "";
@@ -29,6 +36,10 @@ const numButtons = document.querySelector(".keypad");
 numButtons.addEventListener("click", (event) => {
     let target = event.target;
     if(target.className==="number"){
+        if(left==="" && right==="" && operator==="" && operatorSelected===false){
+            clearDisplay();
+            result = "";
+        }
         display.textContent += target.id;
         if(operatorSelected === false){
             left += target.id;
@@ -37,6 +48,19 @@ numButtons.addEventListener("click", (event) => {
         }
     }
     if(target.className==="operator"){
+        if(left===""){
+            if(result===""){
+                alert("Enter a number first.");
+                return;
+            } else{
+                left = result;
+            }
+            
+        }
+        if(operatorSelected===true){
+            alert("Only one set of numbers at a time.");
+            return;
+        }
         clearDisplay();
         operator = target.id;
         operatorSelected = true;
@@ -50,18 +74,26 @@ numButtons.addEventListener("click", (event) => {
 function add(){
     let sum = Number(left)+Number(right);
     display.textContent = sum;
+    result = sum;
+    clearData();
 }
 function subtract(){
     let difference = Number(left)-Number(right);
     display.textContent = difference;
+    result = difference;
+    clearData();
 }
 function multiply(){
     let product = Number(left)*Number(right);
     display.textContent = product;
+    result = product;
+    clearData();
 }
 function divide(){
     let quotient = Number(left)/Number(right);
     display.textContent = quotient;
+    result = quotient;
+    clearData();
 }
 
 //CALCULATION
