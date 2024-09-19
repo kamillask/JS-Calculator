@@ -1,6 +1,3 @@
-//DECIMAL CODED, NEED TO CODE ^ AND %
-
-
 let left = "";
 let right = "";
 let operator = "";
@@ -80,6 +77,18 @@ numButtons.addEventListener("click", (event) => {
     if(target.className==="calculate"){
         calculate();
     }
+    if(target.className==="backspace"){
+        if(left==="" && right===""){
+            return;
+        }
+        if(operatorSelected===false){
+            left = left.slice(0,-1);
+            display.textContent = display.textContent.slice(0,-1);
+        } else{
+            right = right.slice(0,-1);
+            display.textContent = display.textContent.slice(0,-1);
+        }
+    }
 })
 
 //MATH FUNCTIONS
@@ -105,6 +114,18 @@ function divide(){
     let quotient = Number(left)/Number(right);
     display.textContent = quotient;
     result = quotient;
+    clearData();
+}
+function raise(){
+    let power = Number(left)**Number(right);
+    display.textContent = power;
+    result = power;
+    clearData();
+}
+function percentage(){
+    let percentage = (Number(left)/100)*Number(right);
+    display.textContent = percentage;
+    result = percentage;
     clearData();
 }
 
@@ -133,6 +154,13 @@ function calculate() {
         divide();
         operatorSelected = false;
     }
-
+    if(operator==="^"){
+        raise();
+        operatorSelected = false;
+    }
+    if(operator==="%"){
+        percentage();
+        operatorSelected = false;
+    }
 }
 
