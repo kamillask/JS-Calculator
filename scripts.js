@@ -17,6 +17,7 @@ function clear() {
     right = "";
     operator = "";
     operatorSelected = false;
+    decimalSelected = false;
     result = "";
 }
 function clearData(){
@@ -24,6 +25,7 @@ function clearData(){
     right = "";
     operator = "";
     operatorSelected = false;
+    decimalSelected = false;
 }
 function clearDisplay(){
     display.textContent = "";
@@ -46,9 +48,13 @@ numButtons.addEventListener("click", (event) => {
         if(target.id==="."){
             if(decimalSelected===true){
                 alert("You can only have one decimal.");
+                return;
+            } else{
+                decimalSelected = true;
             }
         }
         display.textContent += target.id;
+        
         if(operatorSelected === false){
             left += target.id;
         } else{
@@ -72,6 +78,7 @@ numButtons.addEventListener("click", (event) => {
         clearDisplay();
         operator = target.id;
         operatorSelected = true;
+        decimalSelected = false;
     }
 
     if(target.className==="calculate"){
@@ -88,6 +95,71 @@ numButtons.addEventListener("click", (event) => {
             right = right.slice(0,-1);
             display.textContent = display.textContent.slice(0,-1);
         }
+    }
+})
+
+//KEYBOARD SUPPORT
+document.addEventListener("keydown", (event) => {
+    // alert(event.key);
+    if(event.key>=0 && event.key<=9 || event.key==="."){
+        if(left==="" && right==="" && operator==="" && operatorSelected===false){
+            clearDisplay();
+            result = "";
+        }
+        //DECIMAL LOGIC
+        if(event.key==="."){
+            if(decimalSelected===true){
+                alert("You can only have one decimal.");
+                return;
+            } else{
+                decimalSelected = true;
+            }
+        }
+        display.textContent += event.key;
+        if(operatorSelected === false){
+            left += event.key;
+        } else{
+            right += event.key;
+        }
+    }
+    if(event.key==="%" || event.key==="^" || event.key==="/" || event.key==="*" || event.key==="-" || event.key==="+"){
+        if(left===""){
+            if(result===""){
+                alert("Enter a number first.");
+                return;
+            } else{
+                left = result;
+            }
+            
+        }
+        if(operatorSelected===true){
+            alert("Only one set of numbers at a time.");
+            return;
+        }
+        clearDisplay();
+        operator = event.key;
+        operatorSelected = true;
+        decimalSelected = false;
+    }
+
+    if(event.key==="Enter"){
+        document.activeElement.blur(); //removes focus from number key, without this keeps pressing last key pressed
+        calculate();
+    }
+    if(event.key==="Backspace"){
+        if(left==="" && right===""){
+            return;
+        }
+        if(operatorSelected===false){
+            left = left.slice(0,-1);
+            display.textContent = display.textContent.slice(0,-1);
+        } else{
+            right = right.slice(0,-1);
+            display.textContent = display.textContent.slice(0,-1);
+        }
+    }
+    if(event.key==="Escape"){
+        clear();
     }
 })
 
@@ -146,7 +218,7 @@ function calculate() {
         subtract();
         operatorSelected = false;
     }
-    if(operator==="x"){
+    if(operator==="x" || operator==="*"){
         multiply();
         operatorSelected = false;
     }

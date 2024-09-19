@@ -1,3 +1,10 @@
+@font-face{
+    font-family:'digital-clock-font';
+    src: url(./fonts/digital-7.ttf);
+   }
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -34,7 +41,7 @@ html, body{
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    font-size: 36px;
+    font-size: 46px;
     font-weight: 700;
     font-style: italic;
 }
@@ -62,12 +69,13 @@ html, body{
     align-items: center;
     box-sizing: border-box;
     padding: 10px;
-    font-size: 36px;
-
+    font-size: 55px;
+    font-family:'digital-clock-font';
 }
 
 .backspace{
     display: flex;
+    font-weight: 700;
 }
 
 .keypad{
